@@ -38,7 +38,7 @@ class MoneyCalController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'inputMoney'  =>  'required|integer|not_in:0',   //จำเป็นต้องมีเเละเป็น string
+            'inputMoney'  =>  'required|integer|not_in:0',   
             'totalPrice'  =>  'required|integer|not_in:0',
         ]);
 
@@ -56,13 +56,8 @@ class MoneyCalController extends Controller
             $ans = $this->moneyCal($inputMoney, $totalPrice);
         }
 
-        $data = [
-            $request->inputMoney,
-            $request->totalPrice
-        ];
 
-
-        return response()->json(['test data pass', $ans]);
+        return response()->json($ans);
     }
 
 
@@ -88,6 +83,16 @@ class MoneyCalController extends Controller
             $change -= $amount;
         }
 
+        $data_output = [
+            '500' => $ans[0],
+            '100' => $ans[1],
+            '50' => $ans[2],
+            '10' => $ans[3],
+            '5' => $ans[4],
+            '1' => $ans[5],
+        ];
+
+        return $data_output;
 
         // if($change >= 500 || $change == 0){
         //     if($change == 0){
@@ -153,18 +158,6 @@ class MoneyCalController extends Controller
         //     '5' => $five,
         //     '1' => $one,
         // ];
-
-        $data_output = [
-            '500' => $ans[0],
-            '100' => $ans[1],
-            '50' => $ans[2],
-            '10' => $ans[3],
-            '5' => $ans[4],
-            '1' => $ans[5],
-        ];
-
-
-        return $data_output;
     }
 
     /**
